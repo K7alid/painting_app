@@ -5,7 +5,7 @@ import 'package:painting_app/workers_screen/model/worker_model.dart';
 
 part 'workers_state.dart';
 
-List<WorkerModel> workersFromFirebase = [];
+
 
 class WorkersCubit extends Cubit<WorkersState> {
   WorkersCubit() : super(WorkersInitial());
@@ -51,6 +51,8 @@ class WorkersCubit extends Cubit<WorkersState> {
       emit(AddNewWorkerErrorState(error.toString()));
     });
   }
+
+  List<WorkerModel> workersFromFirebase = [];
 
   void getWorkers(customerUID, daysUID) {
     FirebaseFirestore.instance

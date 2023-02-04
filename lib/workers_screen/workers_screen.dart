@@ -22,9 +22,7 @@ class WorkerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => WorkersCubit(),
-      child: BlocConsumer<WorkersCubit, WorkersState>(
+    return BlocConsumer<WorkersCubit, WorkersState>(
         listener: (context, state) {},
         builder: (context, state) {
           WorkersCubit cubit = WorkersCubit.get(context);
@@ -37,7 +35,7 @@ class WorkerScreen extends StatelessWidget {
                 leading: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      //workersFromFirebase = [];
+                      //cubit.workersFromFirebase = [];
                     },
                     icon: const Icon(
                       Icons.arrow_back,
@@ -50,7 +48,7 @@ class WorkerScreen extends StatelessWidget {
                 ),
               ),
               body: ConditionalBuilder(
-                condition: workersFromFirebase.isEmpty,
+                condition: cubit.workersFromFirebase.isEmpty,
                 builder: (context) =>
                     const Center(child: Text('لا توجد اي بيانات بعد')),
                 fallback: (context) => Padding(
@@ -67,7 +65,7 @@ class WorkerScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         title: customText(
-                          text: workersFromFirebase[index].name,
+                          text: cubit.workersFromFirebase[index].name,
                           size: 25,
                           alignment: AlignmentDirectional.centerStart,
                           color: Colors.white,
@@ -77,7 +75,7 @@ class WorkerScreen extends StatelessWidget {
                     separatorBuilder: (context, index) => const SizedBox(
                       height: 10,
                     ),
-                    itemCount: workersFromFirebase.length,
+                    itemCount: cubit.workersFromFirebase.length,
                   ),
                 ),
               ),
@@ -142,7 +140,6 @@ class WorkerScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
+      );
   }
 }

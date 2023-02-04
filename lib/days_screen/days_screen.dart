@@ -25,16 +25,7 @@ class DaysScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => DaysCubit(),
-        ),
-        BlocProvider(
-          create: (context) => WorkersCubit(),
-        ),
-      ],
-      child: BlocConsumer<DaysCubit, DaysState>(
+    return BlocConsumer<DaysCubit, DaysState>(
         listener: (context, state) {},
         builder: (context, state) {
           DaysCubit daysCubit = DaysCubit.get(context);
@@ -48,7 +39,7 @@ class DaysScreen extends StatelessWidget {
                 leading: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      //daysFromFirebase = [];
+                      //daysCubit.daysFromFirebase = [];
                     },
                     icon: const Icon(
                       Icons.arrow_back,
@@ -60,7 +51,7 @@ class DaysScreen extends StatelessWidget {
                 ),
               ),
               body: ConditionalBuilder(
-                condition: daysFromFirebase.isEmpty,
+                condition: daysCubit.daysFromFirebase.isEmpty,
                 builder: (context) =>
                     const Center(child: Text('لا توجد اي بيانات بعد')),
                 fallback: (context) => Padding(
@@ -73,22 +64,22 @@ class DaysScreen extends StatelessWidget {
                       ),
                       child: ListTile(
                         onTap: () {
-                          print(daysFromFirebase.length);
+                          print(daysCubit.daysFromFirebase.length);
                           workersCubit.getWorkers(
                             customerModel.uId,
-                            daysFromFirebase[index].uId,
+                            daysCubit.daysFromFirebase[index].uId,
                           );
                           navigateTo(
                               context,
                               WorkerScreen(
-                                  daysFromFirebase[index], customerModel));
+                                  daysCubit.daysFromFirebase[index], customerModel));
                         },
                         tileColor: Colors.cyan,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         title: customText(
-                          text: daysFromFirebase[index].dateTime,
+                          text: daysCubit.daysFromFirebase[index].dateTime,
                           size: 25,
                           alignment: AlignmentDirectional.centerStart,
                           color: Colors.white,
@@ -98,7 +89,7 @@ class DaysScreen extends StatelessWidget {
                     separatorBuilder: (context, index) => const SizedBox(
                       height: 10,
                     ),
-                    itemCount: daysFromFirebase.length,
+                    itemCount: daysCubit.daysFromFirebase.length,
                   ),
                 ),
               ),
@@ -142,7 +133,7 @@ class DaysScreen extends StatelessWidget {
                                             ),
                                           ).then((value) {
                                             dateTimeController.text =
-                                                DateFormat.yMMMM("ar_EG")
+                                                DateFormat.yMMMMEEEEd()
                                                     .format(value!);
                                           });
                                         },
@@ -182,7 +173,6 @@ class DaysScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
+      );
   }
 }

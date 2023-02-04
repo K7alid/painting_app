@@ -5,8 +5,6 @@ import 'package:painting_app/days_screen/model/day_model.dart';
 
 part 'days_state.dart';
 
-List<DayModel> daysFromFirebase = [];
-
 class DaysCubit extends Cubit<DaysState> {
   DaysCubit() : super(DaysInitial());
 
@@ -75,6 +73,7 @@ class DaysCubit extends Cubit<DaysState> {
     });
   }*/
 
+  List<DayModel> daysFromFirebase = [];
   void getDays(uId) {
     FirebaseFirestore.instance
         .collection('customers')

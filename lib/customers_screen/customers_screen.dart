@@ -23,16 +23,7 @@ class CustomersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => CustomersCubit()..getCustomers(),
-        ),
-        BlocProvider(
-          create: (context) => DaysCubit(),
-        ),
-      ],
-      child: BlocConsumer<CustomersCubit, CustomersState>(
+    return BlocConsumer<CustomersCubit, CustomersState>(
         listener: (context, state) {},
         builder: (context, state) {
           CustomersCubit customersCubit = CustomersCubit.get(context);
@@ -58,7 +49,7 @@ class CustomersScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
-                      onTap: () {
+                      onTap: () async{
                         daysCubit.getDays(
                             customersCubit.customersFromFirebase[index].uId);
 
@@ -197,7 +188,6 @@ class CustomersScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
+      );
   }
 }
